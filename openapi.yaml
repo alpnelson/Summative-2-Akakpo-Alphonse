@@ -24,7 +24,20 @@ paths:
             '*/*':
               schema:
                 type: object
-  /book/update:
+  /book:
+    get:
+      tags:
+        - book-controller
+      operationId: getBooks
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
     put:
       tags:
         - book-controller
@@ -38,6 +51,23 @@ paths:
       responses:
         '204':
           description: No Content
+    post:
+      tags:
+        - book-controller
+      operationId: addBook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Book'
   /author/update:
     put:
       tags:
@@ -70,24 +100,6 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Publisher'
-  /book/create:
-    post:
-      tags:
-        - book-controller
-      operationId: addBook
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Book'
-        required: true
-      responses:
-        '201':
-          description: Created
-          content:
-            '*/*':
-              schema:
-                $ref: '#/components/schemas/Book'
   /author/create:
     post:
       tags:
@@ -139,28 +151,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Publisher'
-  /book/searchByAuthorId/{authorId}:
-    get:
-      tags:
-        - book-controller
-      operationId: getCustomersByAuthorId
-      parameters:
-        - name: authorId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '200':
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
-  /book/read/{id}:
+  /book/{id}:
     get:
       tags:
         - book-controller
@@ -179,11 +170,32 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/Book'
-  /book/read/all:
+    delete:
+      tags:
+        - book-controller
+      operationId: deleteBook
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: No Content
+  /book/authorId/{authorId}:
     get:
       tags:
         - book-controller
-      operationId: getBooks
+      operationId: getBookByAuthorId
+      parameters:
+        - name: authorId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
       responses:
         '200':
           description: OK
@@ -245,21 +257,6 @@ paths:
             '*/*':
               schema:
                 type: object
-  /book/delete/{id}:
-    delete:
-      tags:
-        - book-controller
-      operationId: deleteBook
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int32
-      responses:
-        '204':
-          description: No Content
   /author/delete/{id}:
     delete:
       tags:
