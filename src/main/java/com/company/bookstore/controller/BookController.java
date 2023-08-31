@@ -16,14 +16,14 @@ public class BookController {
     BookRepository repo;
 
     //CreateBook
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Book addBook(@RequestBody Book book) {
         return repo.save(book);
     }
 
     //Get book by id
-    @GetMapping("/read/{id}")
+    @GetMapping("/{id}")
     public Book getBookById(@PathVariable int id) {
 
         Optional<Book> returnVal = repo.findById(id);
@@ -35,28 +35,28 @@ public class BookController {
     }
 
     //Get all books
-    @GetMapping("/read/all")
+    @GetMapping
     public List<Book> getBooks() {
         return repo.findAll();
     }
 
     //Update book
-    @PutMapping("/update")
+    @PutMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateBook(@RequestBody Book book) {
         repo.save(book);
     }
 
     //Delete book
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBook(@PathVariable int id) {
         repo.deleteById(id);
     }
 
     //Search book by author id
-    @GetMapping("/searchByAuthorId/{authorId}")
-    public List<Book> getCustomersByAuthorId(@PathVariable int authorId) {
+    @GetMapping("/authorId/{authorId}")
+    public List<Book> getBookByAuthorId(@PathVariable int authorId) {
         return repo.findByAuthorId(authorId);
     }
 }

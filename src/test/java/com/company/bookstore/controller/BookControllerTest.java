@@ -82,7 +82,7 @@ public class BookControllerTest {
 
         String json = mapper.writeValueAsString(book);
 
-        mockMvc.perform(post("/book/create")
+        mockMvc.perform(post("/book")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isCreated());
@@ -122,7 +122,7 @@ public class BookControllerTest {
         book.setPublisherId(publisher.getPublisher_id());
         book.setPrice(new BigDecimal("19.99"));
 
-        mockMvc.perform(get("/book/read/{id}", 1))
+        mockMvc.perform(get("/book/{id}", 1))
                 .andExpect(status().isOk());
     }
 
@@ -161,7 +161,7 @@ public class BookControllerTest {
 
         String json = mapper.writeValueAsString(book);
 
-        mockMvc.perform(get("/book/read/all")
+        mockMvc.perform(get("/book")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isOk());
@@ -208,7 +208,7 @@ public class BookControllerTest {
 
         String json = mapper.writeValueAsString(book);
 
-        mockMvc.perform(put("/book/update")
+        mockMvc.perform(put("/book")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isNoContent());
@@ -248,7 +248,7 @@ public class BookControllerTest {
         book.setPrice(new BigDecimal("19.99"));
         bookRepo.save(book);
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/book/delete/{id}", book.getId())
+        mockMvc.perform(MockMvcRequestBuilders.delete("/book/{id}", book.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -292,7 +292,7 @@ public class BookControllerTest {
 
         List<Book> bookList = Arrays.asList(book);
 
-        mockMvc.perform(get("/book/searchByAuthorId/{authorId}", author.getId()))
+        mockMvc.perform(get("/book/authorId/{authorId}", author.getId()))
                 .andExpect(status().isOk());
     }
 }

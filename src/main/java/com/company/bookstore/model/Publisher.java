@@ -16,7 +16,7 @@ public class Publisher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int publisher_id;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_id")
     private List<Book> books = new ArrayList<>();
 
